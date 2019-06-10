@@ -17,6 +17,7 @@
 3、**唤醒的两种情况:**
 
 (1)、如果调用queueInLoop()的线程不是IO线程，那么唤醒是必需的；
+
 (2)、如果在IO线程调用queueInLoop，而此时正在调用pending functor，那么也必须唤醒。
 
 只有在IO线程的事件回调中调用queueInLoop()才无须wakeup()。

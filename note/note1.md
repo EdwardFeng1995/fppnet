@@ -1,6 +1,6 @@
-##muduo网络库设计与实现（1）
+## muduo网络库设计与实现（1）
 
-###1、EventLoop
+### 1、EventLoop
 （1）事件循环类；
 
 （2）不可拷贝，继承boost::noncopyable；
@@ -9,11 +9,11 @@
 
 （4）muduo的接口设计会明确哪些成员函数是线程安全的，可以跨线程调用；哪些成员函数只能在某个特定线程调用（主要是IO线程）。为了能在运行时检查这些pre-condition，定义isInLoopThread()和assertInloopThread()等函数。
 
-###2、Ractor的关键结构
+### 2、Ractor的关键结构
 
 **<font color=#0099ff> Ractor最核心的事件分发机制，即将IO multiplexing 拿到的IO事件分发给各个文件描述符(fd)的事件处理函数  </font>**
 
-###2.1 Channel类
+### 2.1 Channel类
 
 （1）Channel负责将IO事件分发给描述符的事件处理函数（回调函数）。
 
@@ -27,7 +27,7 @@
 
 （6）Channel::handleEvent()是Channel核心，事件分发程序，EventLoop::loop()调用，功能是根据revents_的值分别调用不同的用户回调。
 
-###2.2 Poller类
+### 2.2 Poller类
 （1）该类是IO multiplexing的封装。
 
 （2）Poller是EventLoop的间接成员，只供Owner EventLoop在IO线程调用，因此无需加锁。其生命期与EventLoop相等。

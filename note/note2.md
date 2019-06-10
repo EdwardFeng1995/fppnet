@@ -1,16 +1,16 @@
-##muduo网络库设计与实现（2）
+## muduo网络库设计与实现（2）
 
-###TimerQueue定时器
+### TimerQueue定时器
 给EventLoop加上定时器功能。传统的Reactor通过控制select(2)和poll(2)的等待时间来实现定时，而现在有了timerfd，可以用和处理IO事件相同的方式来处理定时。
 
-###1、TimerQueue Class
+### 1、TimerQueue Class
 
 muduo定时器功能由三个class实现，TimerId、Timer、TimerQueue。
 
-###TimerId:
+### TimerId:
 简单的生成一个定时器指针
 
-###Timer:
+### Timer:
 timer定时器对象，该类的作用就是创建一个定时器对象，成员包括：
 
 **private:**
@@ -33,7 +33,7 @@ timer定时器对象，该类的作用就是创建一个定时器对象，成员
 
   * void restart(Timestamp now);     **//重启定时器**
 
-###TimerQueue:
+### TimerQueue:
 定时器队列，成员包括：
 **private:**
 
