@@ -51,6 +51,8 @@ fppnet是一个仿照muduo（木铎）网络库实现的基于Reactor以及非�
 | TcpServer.{h,cpp} | Tcp服务端 |
 | TimerId.h | |
 
+##### 用户不可见类：
+
 | 类             |       描述         |
 | :------------   | :--------------  |
 | Acceptor.{h,cpp} | 接受器，用于服务端接受连接 |
