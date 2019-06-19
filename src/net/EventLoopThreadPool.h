@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_EVENTLOOPTHREADPOOL_H
-#define MUDUO_NET_EVENTLOOPTHREADPOOL_H
+#ifndef FPPNET_SRC_NET_EVENTLOOPTHREADPOOL_H
+#define FPPNET_SRC_NET_EVENTLOOPTHREADPOOL_H
 
 #include <thread>
 #include <mutex>
@@ -10,7 +10,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
-namespace muduo
+namespace fppnet
 {
 
 class EventLoop;

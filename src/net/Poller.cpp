@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <poll.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 Poller::Poller(EventLoop* loop) :
     ownerLoop_(loop)
@@ -17,13 +17,13 @@ Poller::~Poller()
 
 //Poller的核心，调用poll(2)获得当前活动的I/O事件，
 //填入activeChannel，并返回poll(2) return的时刻
-Timestamp Poller::poll(int timeoutMs, ChannelList* activeChannels)
+muduo::Timestamp Poller::poll(int timeoutMs, ChannelList* activeChannels)
 {
     //获取活跃Channels的数量
     int numEvents = ::poll(&*pollfds_.begin(), pollfds_.size(), timeoutMs);
 
     //获取当前时间
-    Timestamp now(Timestamp::now());
+    muduo::Timestamp now(muduo::Timestamp::now());
     
     if(numEvents > 0) {
         LOG_TRACE << numEvents << " evnets happened";
@@ -110,7 +110,7 @@ void  Poller::removeChannel(Channel* channel)
     assert(n == 1);
     (void)n;
 
-    if (implicit_cast<size_t>(idx) == pollfds_.size()-1) {
+    if (muduo::implicit_cast<size_t>(idx) == pollfds_.size()-1) {
         pollfds_.pop_back();
     }
     else

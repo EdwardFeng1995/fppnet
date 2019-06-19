@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-using namespace muduo;
+using namespace fppnet;
 using namespace sockets;
 
 namespace 
@@ -20,12 +20,12 @@ typedef struct sockaddr SA;
 // 将特定协议的套接字地址结构的指针强转成指向通用套接字地址结构的指针
 const SA* sockaddr_cast(const struct sockaddr_in* addr)
 {
-    return static_cast<const SA*>(implicit_cast<const void*>(addr));
+    return static_cast<const SA*>(muduo::implicit_cast<const void*>(addr));
 }
 
 SA* sockaddr_cast(struct sockaddr_in* addr)
 {
-    return static_cast<SA*>(implicit_cast<void*>(addr));
+    return static_cast<SA*>(muduo::implicit_cast<void*>(addr));
 }
 
 // 将文件描述符设置为非阻塞

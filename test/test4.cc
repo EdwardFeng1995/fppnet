@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <sys/timerfd.h>
 
-muduo::EventLoop* g_loop;
+fppnet::EventLoop* g_loop;
 
 void timeout(muduo::Timestamp receiveTime)
 {
@@ -15,11 +15,11 @@ void timeout(muduo::Timestamp receiveTime)
 int main()
 {
     printf("%s started\n", muduo::Timestamp::now().toFormattedString().c_str());
-    muduo::EventLoop loop;
+    fppnet::EventLoop loop;
     g_loop = &loop;
 
     int timerfd = ::timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
-    muduo::Channel channel(&loop, timerfd);
+    fppnet::Channel channel(&loop, timerfd);
     channel.setReadCallback(timeout);
     channel.enableReading();
 

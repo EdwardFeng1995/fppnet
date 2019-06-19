@@ -7,7 +7,7 @@
 #include <netinet/tcp.h>
 #include <strings.h>  // bzero
 
-using namespace muduo;
+using namespace fppnet;
 
 Socket::~Socket()
 {

@@ -7,18 +7,18 @@
 #include "../src/net/Channel.h"
 #include "../src/net/SocketsOps.h"
 #include "../src/net/EventLoopThread.h"
-using namespace muduo;
+using namespace fppnet;
 
 void newConnection1(int sockfd, const InetAddress& peeraddr)
 {
-    printf("tid = %d, newConnection()1: accepted a new connection from %s\n",CurrentThread::tid(), peeraddr.toHostPort().c_str());
+    printf("tid = %d, newConnection()1: accepted a new connection from %s\n",muduo::CurrentThread::tid(), peeraddr.toHostPort().c_str());
     ::write(sockfd, "How are you?\n", 13);
     sockets::close(sockfd);
 }
 
 void newConnection2(int sockfd, const InetAddress& peeraddr)
 {
-    printf("tid = %d, newConnection()2: accepted a new connection from %s\n", CurrentThread::tid(), peeraddr.toHostPort().c_str());
+    printf("tid = %d, newConnection()2: accepted a new connection from %s\n", muduo::CurrentThread::tid(), peeraddr.toHostPort().c_str());
     ::write(sockfd, "How do you do?\n", 15);
     sockets::close(sockfd);
 }

@@ -1,7 +1,7 @@
 #include "../src/net/EventLoop.h"
 #include "../src/base/thread/Thread.h"
 
-muduo::EventLoop* g_loop;
+fppnet::EventLoop* g_loop;
 
 void threadFunc()
 {
@@ -10,7 +10,7 @@ void threadFunc()
 
 int main()
 {
-  muduo::EventLoop loop;
+  fppnet::EventLoop loop;
   g_loop = &loop;
   muduo::Thread t(threadFunc);
   t.start();

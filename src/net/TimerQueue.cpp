@@ -10,7 +10,7 @@
 #include <boost/foreach.hpp>
 #include <sys/timerfd.h>
 
-namespace muduo
+namespace fppnet
 {
 namespace detail
 {
@@ -28,11 +28,11 @@ int creatTimerfd()
 }
 
 //计算时间when与现在的时间差
-struct timespec howMuchTimeFromNow(Timestamp when)
+struct timespec howMuchTimeFromNow(muduo::Timestamp when)
 {
     //计算出时间差
     int64_t microseconds = when.microSecondsSinceEpoch() - 
-        Timestamp::now().microSecondsSinceEpoch();
+        muduo::Timestamp::now().microSecondsSinceEpoch();
 
     //如果时间差太小的话，就按100微妙算
     if(microseconds < 100)
@@ -40,14 +40,14 @@ struct timespec howMuchTimeFromNow(Timestamp when)
 
     //将事件差转换成秒和微秒的单位
     struct timespec ts;
-    ts.tv_sec = static_cast<time_t> (microseconds / Timestamp::kMicroSecondsPerSecond);
-    ts.tv_nsec = static_cast<long> ((microseconds % Timestamp::kMicroSecondsPerSecond) * 1000);
+    ts.tv_sec = static_cast<time_t> (microseconds / muduo::Timestamp::kMicroSecondsPerSecond);
+    ts.tv_nsec = static_cast<long> ((microseconds % muduo::Timestamp::kMicroSecondsPerSecond) * 1000);
 
     return ts;
 }
 
 //读取定时器文件中的内容
-void readTimerfd(int timerfd, Timestamp now)
+void readTimerfd(int timerfd, muduo::Timestamp now)
 {
     uint64_t howmany;
     ssize_t n = ::read(timerfd, &howmany, sizeof howmany);
@@ -58,7 +58,7 @@ void readTimerfd(int timerfd, Timestamp now)
 }
 
 //重设定时器到期时间，这个函数在TimerQueue::AddTimer()中调用，就是在插入新的定时器以后，重设定时器队列的到期时间
-void resetTimerfd(int timerfd, Timestamp expiration)
+void resetTimerfd(int timerfd, muduo::Timestamp expiration)
 {
     // wake up loop by timerfd_settime()
     struct itimerspec newValue;
@@ -78,8 +78,8 @@ void resetTimerfd(int timerfd, Timestamp expiration)
 
 
 
-using namespace muduo;
-using namespace muduo::detail;
+using namespace fppnet;
+using namespace fppnet::detail;
 
 TimerQueue::TimerQueue(EventLoop* loop) : 
     loop_(loop),
@@ -107,7 +107,7 @@ TimerQueue::~TimerQueue()
 
 //经过修改，addtimer()拆分为两部分，拆分后只负责转发，真正的addTimerInLoop在IO线程工作
 //该函数可以跨线程调用了，实现线程安全
-TimerId TimerQueue::addTimer(const TimerCallback&cb, Timestamp when, double interval)
+TimerId TimerQueue::addTimer(const TimerCallback&cb, muduo::Timestamp when, double interval)
 {
     LOG_DEBUG << "addTimer";
     //创建一个新的定时器
@@ -158,7 +158,7 @@ void TimerQueue::handleRead()
     LOG_DEBUG << "handleRead";
     loop_->assertInLoopThread();
     //获取当前时间
-    Timestamp now(Timestamp::now());
+    muduo::Timestamp now(muduo::Timestamp::now());
     //读取定时器事件
     readTimerfd(timerfd_, now);
 
@@ -175,7 +175,7 @@ void TimerQueue::handleRead()
     reset(expired, now);
 }
 
-std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
+std::vector<TimerQueue::Entry> TimerQueue::getExpired(muduo::Timestamp now)
 {
     LOG_DEBUG << "getExpired()";
     assert(timers_.size() == activeTimers_.size());
@@ -215,10 +215,10 @@ std::vector<TimerQueue::Entry> TimerQueue::getExpired(Timestamp now)
     return expired;
 }
 
-void TimerQueue::reset(const std::vector<Entry>& expired, Timestamp now)
+void TimerQueue::reset(const std::vector<Entry>& expired, muduo::Timestamp now)
 {
     //下一次到期时间
-    Timestamp nextExpire;
+    muduo::Timestamp nextExpire;
 
     for (auto it = expired.begin(); it != expired.end(); ++it) {
         ActiveTimer timer(it->second, it->second->sequence());
@@ -251,7 +251,7 @@ bool TimerQueue::insert(Timer* timer)
     bool earliestChanged = false;
 
     //得到新的定时器到期时间
-    Timestamp when = timer->expiration();
+    muduo::Timestamp when = timer->expiration();
     auto it = timers_.begin();
 
     // 如果定时器队列为空，或者队列中最早的的定时器都没新的定时器早，那说明新的定时器必然是最早的

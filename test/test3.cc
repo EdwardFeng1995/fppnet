@@ -2,7 +2,7 @@
 #include "../src/net/EventLoop.h"
 #include "../src/base/thread/Thread.h"
 
-using namespace muduo;
+using namespace fppnet;
 
 int main()
 {

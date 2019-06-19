@@ -8,7 +8,7 @@
 
 #include <errno.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 const int Connector::kMaxRetryDelayMs;
 
@@ -143,7 +143,7 @@ void Connector::handleWrite()
         // 还需要用getsockopt(sockfd, SOL_SOCKET, SO_ERROR, ...)再次确认一下。
         int err = sockets::getSocketError(sockfd);
         if (err) {           //有错误
-            LOG_WARN << "Connector::handleWrite - SO_ERROR = " << err << " " << strerror_tl(err);
+            LOG_WARN << "Connector::handleWrite - SO_ERROR = " << err << " " << muduo::strerror_tl(err);
             retry(sockfd);   // 重连
         } 
         else if (sockets::isSelfConnect(sockfd)) {  // 发生了自连接，即源IP，源port=目的IP，目的port，断开重连
@@ -172,7 +172,7 @@ void Connector::handleError()
 
     int sockfd = removeAndResetChannel();
     int err = sockets::getSocketError(sockfd);
-    LOG_TRACE << "SO_ERROR = " << err << " " << strerror_tl(err);
+    LOG_TRACE << "SO_ERROR = " << err << " " << muduo::strerror_tl(err);
     retry(sockfd);
 }
 

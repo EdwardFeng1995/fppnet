@@ -6,7 +6,7 @@
 #include <memory.h>
 #include <sys/uio.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 ssize_t Buffer::readFd(int fd, int* savedErrno)
 {
@@ -20,7 +20,7 @@ ssize_t Buffer::readFd(int fd, int* savedErrno)
     const ssize_t n = readv(fd, vec, 2);    // read data into multiple buffers
     if (n < 0) {
         *savedErrno = errno;
-    } else if (implicit_cast<size_t>(n) <= writabel) {
+    } else if (muduo::implicit_cast<size_t>(n) <= writabel) {
         writerIndex_ += n;
     } else {
         writerIndex_ = buffer_.size();

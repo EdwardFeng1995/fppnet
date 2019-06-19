@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_EVENTLOOP_H
-#define MUDUO_NET_EVENTLOOP_H
+#ifndef FPPNET_SRC_NET_EVENTLOOP_H
+#define FPPNET_SRC_NET_EVENTLOOP_H
 
 #include "../base/datetime/Timestamp.h"
 #include "../base/thread/Thread.h"
@@ -10,7 +10,7 @@
 #include <vector>
 #include <mutex>
 
-namespace muduo
+namespace fppnet
 {
 
 class Channel;
@@ -33,7 +33,7 @@ public:
     void quit();
     
     //poll返回的时间，意味着数据到达
-    Timestamp pollReturnTime() const { return pollReturnTime_; }
+    muduo::Timestamp pollReturnTime() const { return pollReturnTime_; }
 
     //在它的IO线程内执行某个用户任务回调
     void runInLoop(const Functor& cb);
@@ -47,7 +47,7 @@ public:
     //给用户新增的定时器接口
     //Runs callback at 'time'.
     //创建一个不能定期重复运行的定时器，在time时刻调用定时器回调，返回一个定时器指针
-    TimerId runAt(const Timestamp& time, const TimerCallback& cb);
+    TimerId runAt(const muduo::Timestamp& time, const TimerCallback& cb);
     
     //Runs callback after @c delay seconds.
     //创建一个不能重复定期运行的定时器，让其中的回调函数在距现在的delay时间后运行
@@ -99,7 +99,7 @@ private:
 
     const pid_t threadId_;                      // 线程id
 
-    Timestamp pollReturnTime_;          
+    muduo::Timestamp pollReturnTime_;          
 
     //std::unique_ptr<Poller> poller_;            // 指向Poller，通过该指针来间接持有Poller
     std::unique_ptr<EPoller> epoller_;

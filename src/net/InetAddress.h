@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_INETADDRESS_H
-#define MUDUO_NET_INETADDRESS_H
+#ifndef FPPNET_SRC_NET_INETADDRESS_H
+#define FPPNET_SRC_NET_INETADDRESS_H
 
 #include "../base/datetime/copyable.h"
 
@@ -7,7 +7,7 @@
 
 #include <netinet/in.h>
 
-namespace muduo
+namespace fppnet
 {
 
 // sockaddr_in 的封装

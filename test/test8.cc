@@ -5,7 +5,7 @@
 #include "../src/net/Channel.h"
 #include "../src/net/SocketsOps.h"
 
-using namespace muduo;
+using namespace fppnet;
 
 void newConnection(int sockfd, const InetAddress& peeraddr)
 {

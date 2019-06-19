@@ -3,7 +3,7 @@
 #include "EventLoop.h"
 #include "EventLoopThread.h"
 
-using namespace muduo;
+using namespace fppnet;
 
 EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseLoop) :
     baseLoop_(baseLoop),

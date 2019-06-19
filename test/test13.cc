@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-muduo::EventLoop* g_loop;
+fppnet::EventLoop* g_loop;
 
 void connectCallback(int sockfd)
 {
@@ -13,10 +13,10 @@ void connectCallback(int sockfd)
 
 int main(int argc, char* argv[])
 {
-    muduo::EventLoop loop;
+    fppnet::EventLoop loop;
     g_loop = &loop;
-    muduo::InetAddress addr("127.0.0.1", 9981);
-    muduo::ConnectorPtr connector(new muduo::Connector(&loop, addr));
+    fppnet::InetAddress addr("127.0.0.1", 9981);
+    fppnet::ConnectorPtr connector(new fppnet::Connector(&loop, addr));
     connector->setNewConnectionCallback(connectCallback);
     connector->start();
 

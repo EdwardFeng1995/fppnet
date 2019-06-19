@@ -1,8 +1,8 @@
 /*
  * poller 的epoll版本，muduo实际的做法是定义Poller基类并提供两份实现PollPoller和EPollPoller
  */
-#ifndef MUDUO_NET_EPOLLER_H
-#define MUDUO_NET_EPOLLER_H
+#ifndef FPPNET_SRC_NET_EPOLLER_H
+#define FPPNET_SRC_NET_EPOLLER_H
 
 #include <boost/noncopyable.hpp>
 #include <map>
@@ -13,7 +13,7 @@
 
 struct epoll_event;
 
-namespace muduo
+namespace fppnet
 {
 
 class Channel;
@@ -31,7 +31,7 @@ public:
 
     // Polls the I/O events.
     // Must be called in the loop thread.
-    Timestamp poll(int timeoutMs, ChannelList* activeChannels);
+    muduo::Timestamp poll(int timeoutMs, ChannelList* activeChannels);
 
     /// Changes the interested I/O events.
     /// Must be called in the loop thread.

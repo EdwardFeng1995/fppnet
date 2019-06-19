@@ -7,10 +7,11 @@
 #include "../base/logging/Logging.h"
 
 #include <stdio.h>  //snprintf
+#include <string>
 
-using namespace muduo;
+using namespace fppnet;
 
-namespace muduo
+namespace fppnet
 {
 namespace detail
 {
@@ -102,7 +103,7 @@ void TcpClient::newConnection(int sockfd)
     char buf[32];
     snprintf(buf, sizeof buf, ":%s#%d", peerAddr.toHostPort().c_str(), nextConnId_);
     ++nextConnId_;
-    string connName = buf;
+    std::string connName = buf;
 
     InetAddress localAddr(sockets::getLocalAddr(sockfd));
     // FIXME poll with zero timeout to double confirm the new connection

@@ -20,7 +20,7 @@
 //         in_addr_t       s_addr;     /* address in network byte order */
 //     };
 
-using namespace muduo;
+using namespace fppnet;
 
 static const in_addr_t kInaddrAny = INADDR_ANY;
 

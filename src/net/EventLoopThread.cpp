@@ -2,7 +2,7 @@
 
 #include "EventLoop.h"
 
-using namespace muduo;
+using namespace fppnet;
 
 EventLoopThread::EventLoopThread() :
     loop_(NULL),

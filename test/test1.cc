@@ -8,7 +8,7 @@ void threadFunc()
   printf("threadFunc(): pid = %d, tid = %d\n",
          getpid(), muduo::CurrentThread::tid());
 
-  muduo::EventLoop loop;
+  fppnet::EventLoop loop;
   loop.loop();
 }
 
@@ -17,7 +17,7 @@ int main()
   printf("main(): pid = %d, tid = %d\n",
          getpid(), muduo::CurrentThread::tid());
 
-  muduo::EventLoop loop;
+  fppnet::EventLoop loop;
 
   muduo::Thread thread(threadFunc);
   //std::thread thread1(threadFunc);

@@ -10,11 +10,11 @@
 #include <sys/eventfd.h>
 #include <signal.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 //__thread变量每一个线程有一份独立实体，
 //各个线程的值互不干扰。可以用来修饰那些带有全局性且值可能变，但是又不值得用全局变量保护的变量。
-__thread muduo::EventLoop* t_loopInThisThread = 0;
+__thread fppnet::EventLoop* t_loopInThisThread = 0;
 const int kPollTimeMs = 10000;
 
 // 忽略SIGPIPE信号，
@@ -42,11 +42,11 @@ static int createEventfd()
     return evtfd;
 }
 
-muduo::EventLoop::EventLoop()
+fppnet::EventLoop::EventLoop()
     :looping_(false),
     quit_(false),
     callingPendingFunctors_(false),
-    threadId_(CurrentThread::tid()),
+    threadId_(muduo::CurrentThread::tid()),
     epoller_(new EPoller(this)),
     timerQueue_(new TimerQueue(this)),
     wakeupFd_(createEventfd()),
@@ -70,14 +70,14 @@ muduo::EventLoop::EventLoop()
 
 }
 
-muduo::EventLoop::~EventLoop()
+fppnet::EventLoop::~EventLoop()
 {
     assert(!looping_);          //检查looping_，断言循环不在运行
     ::close(wakeupFd_);
     t_loopInThisThread = NULL;  
 }
 
-void muduo::EventLoop::loop()
+void fppnet::EventLoop::loop()
 {
     assert(!looping_);          //断言循环不在运行
     assertInLoopThread();       //断言循环在创建时的线程
@@ -103,7 +103,7 @@ void EventLoop::abortNotInloopThread()
 {
   LOG_FATAL << "EventLoop::abortNotInLoopThread - EventLoop " << this
             << " was created in threadId_ = " << threadId_
-            << ", current thread id = " <<  CurrentThread::tid();
+            << ", current thread id = " <<  muduo::CurrentThread::tid();
 }
 
 void EventLoop::quit()
@@ -167,20 +167,20 @@ void EventLoop::queueInLoop(const Functor& cb)
 }
 
 
-TimerId EventLoop::runAt(const Timestamp& time, const TimerCallback& cb)
+TimerId EventLoop::runAt(const muduo::Timestamp& time, const TimerCallback& cb)
 {
     return timerQueue_->addTimer(cb, time, 0.0);
 }
 
 TimerId EventLoop::runAfter(double delay, const TimerCallback& cb)
 {
-    Timestamp time(addTime(Timestamp::now(), delay));
+    muduo::Timestamp time(addTime(muduo::Timestamp::now(), delay));
     return runAt(time, cb);
 }
 
 TimerId EventLoop::runEvery(double interval, const TimerCallback& cb)
 {
-    Timestamp time(addTime(Timestamp::now(), interval));
+    muduo::Timestamp time(addTime(muduo::Timestamp::now(), interval));
     return timerQueue_->addTimer(cb, time, interval);
 }
 

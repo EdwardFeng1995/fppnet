@@ -11,7 +11,7 @@
 
 std::string message = "Hello\n";
 
-void onConnection(const muduo::TcpConnectionPtr& conn)
+void onConnection(const fppnet::TcpConnectionPtr& conn)
 {
   if (conn->connected())
   {
@@ -27,8 +27,8 @@ void onConnection(const muduo::TcpConnectionPtr& conn)
   }
 }
 
-void onMessage(const muduo::TcpConnectionPtr& conn,
-               muduo::Buffer* buf,
+void onMessage(const fppnet::TcpConnectionPtr& conn,
+               fppnet::Buffer* buf,
                muduo::Timestamp receiveTime)
 {
   printf("onMessage(): received %zd bytes from connection [%s] at %s\n",
@@ -41,9 +41,9 @@ void onMessage(const muduo::TcpConnectionPtr& conn,
 
 int main()
 {
-  muduo::EventLoop loop;
-  muduo::InetAddress serverAddr("localhost", 9981);
-  muduo::TcpClient client(&loop, serverAddr);
+  fppnet::EventLoop loop;
+  fppnet::InetAddress serverAddr("localhost", 9981);
+  fppnet::TcpClient client(&loop, serverAddr);
 
   client.setConnectionCallback(onConnection);
   client.setMessageCallback(onMessage);

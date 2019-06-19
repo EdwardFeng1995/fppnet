@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_TCPCONNECTION_H
-#define MUDUO_NET_TCPCONNECTION_H
+#ifndef FPPNET_SRC_NET_TCPCONNECTION_H
+#define FPPNET_SRC_NET_TCPCONNECTION_H
 
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -9,7 +9,7 @@
 #include "Callbacks.h"
 #include "InetAddress.h"
 
-namespace  muduo
+namespace  fppnet
 {
 
 class Channel;
@@ -70,7 +70,7 @@ private:
     void setState(StateE s) {
         state_ = s;
     }
-    void handleRead(Timestamp receiveTime);
+    void handleRead(muduo::Timestamp receiveTime);
     void handleWrite();
     void handleClose();
     void handleError();

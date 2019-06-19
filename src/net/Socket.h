@@ -1,9 +1,10 @@
-#ifndef MUDUO_NET_SOCKET_H
-#define MUDUO_NET_SOCKET_H
+#ifndef FPPNET_SRC_NET_SOCKET_H
+#define FPPNET_SRC_NET_SOCKET_H
 
 #include <boost/noncopyable.hpp>
 
-namespace muduo{
+namespace fppnet
+{
 
 class InetAddress;
 

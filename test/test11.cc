@@ -7,7 +7,7 @@ std::string message1;
 std::string message2;
 int sleepseconds = 5;
 
-void onConnection(const muduo::TcpConnectionPtr& conn)
+void onConnection(const fppnet::TcpConnectionPtr& conn)
 {
   if (conn->connected())
   {
@@ -28,8 +28,8 @@ void onConnection(const muduo::TcpConnectionPtr& conn)
   }
 }
 
-void onMessage(const muduo::TcpConnectionPtr& conn,
-               muduo::Buffer* buf,
+void onMessage(const fppnet::TcpConnectionPtr& conn,
+               fppnet::Buffer* buf,
                muduo::Timestamp receiveTime)
 {
   printf("onMessage(): received %zd bytes from connection [%s] at %s\n",
@@ -58,10 +58,10 @@ int main(int argc, char* argv[])
   std::fill(message1.begin(), message1.end(), 'A');
   std::fill(message2.begin(), message2.end(), 'B');
 
-  muduo::InetAddress listenAddr(9981);
-  muduo::EventLoop loop;
+  fppnet::InetAddress listenAddr(9981);
+  fppnet::EventLoop loop;
 
-  muduo::TcpServer server(&loop, listenAddr);
+  fppnet::TcpServer server(&loop, listenAddr);
   server.setConnectionCallback(onConnection);
   server.setMessageCallback(onMessage);
   server.start();

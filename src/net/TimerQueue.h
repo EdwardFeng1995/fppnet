@@ -8,7 +8,7 @@
 #include "Callbacks.h"
 #include "Channel.h"
 
-namespace muduo
+namespace fppnet
 {
 
 class EventLoop;
@@ -21,13 +21,13 @@ public:
     TimerQueue(EventLoop* loop);
     ~TimerQueue();
 
-    TimerId addTimer(const TimerCallback& cb, Timestamp when, double interval);
+    TimerId addTimer(const TimerCallback& cb, muduo::Timestamp when, double interval);
     
     // 注销定时器
     void cancel(TimerId timerId);
 private:
     
-    using Entry = std::pair<Timestamp, Timer*>;
+    using Entry = std::pair<muduo::Timestamp, Timer*>;
     //小题大作，有个缺点，如果用户一直持有TimerId，会造成引用计数所占的内存无法释放
     //using Entry = std::pair<Timestamp, std::shared_ptr<Timer>>;
     using TimerList = std::set<Entry>;
@@ -45,10 +45,10 @@ private:
     void handleRead();
 
     // 将所有到期的定时器取出
-    std::vector<Entry> getExpired(Timestamp now);
+    std::vector<Entry> getExpired(muduo::Timestamp now);
 
     // 将所有到期的定时器根据当前时间进行重置，并重置定时器队列的到期时间
-    void reset(const std::vector<Entry>& expired, Timestamp now);
+    void reset(const std::vector<Entry>& expired, muduo::Timestamp now);
 
     // 新的定时器插入到队列
     bool insert(Timer* timer);

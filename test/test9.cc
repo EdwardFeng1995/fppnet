@@ -3,7 +3,7 @@
 #include "../src/net/InetAddress.h"
 #include <stdio.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 void onConnection(const TcpConnectionPtr& conn)
 {
@@ -19,7 +19,7 @@ void onConnection(const TcpConnectionPtr& conn)
 
 void onMessage(const TcpConnectionPtr& conn,
                Buffer* buf,
-               Timestamp receiveTime)
+               muduo::Timestamp receiveTime)
 {
     printf("onMessage(): received %zd bytes from connection [%s] at %s\n",
            buf->readableBytes(),

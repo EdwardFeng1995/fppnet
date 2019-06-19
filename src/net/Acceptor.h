@@ -1,12 +1,12 @@
-#ifndef MUDUO_NET_ACCEPTOR_H
-#define MUDUO_NET_ACCEPTOR_H
+#ifndef FPPNET_SRC_NET_ACCEPTOR_H
+#define FPPNET_SRC_NET_ACCEPTOR_H
 
 #include <boost/noncopyable.hpp>
 
 #include "Socket.h"
 #include "Channel.h"
 
-namespace muduo
+namespace fppnet
 {
 
 class EventLoop;

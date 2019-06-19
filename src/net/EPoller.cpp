@@ -10,7 +10,7 @@
 #include <poll.h>
 #include <sys/epoll.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 // 在linux，poll(2)和epoll(4)应该是相同的
 // BOOST_STATIC_ASSERT是编译时断言宏
@@ -43,18 +43,18 @@ EPoller::~EPoller()
     ::close(epollfd_);
 }
 
-Timestamp EPoller::poll(int timeoutMs, ChannelList* activeChannels)
+muduo::Timestamp EPoller::poll(int timeoutMs, ChannelList* activeChannels)
 {
     int numEvents = ::epoll_wait(epollfd_, &*events_.begin(), 
                                  static_cast<int>(events_.size()), timeoutMs);
-    Timestamp now(Timestamp::now());
+    muduo::Timestamp now(muduo::Timestamp::now());
     if (numEvents > 0) {
         LOG_TRACE << numEvents << " events_ happended";
         fillActiveChannels(numEvents, activeChannels);
 
         // 如果当前活动fd的数目填满了events_，那么下次就尝试接收更多的活动fd
         // events_的初始长度是16，其会根据程序的IO繁忙程度自动增长，但目前不会自动收缩。
-        if (implicit_cast<size_t>(numEvents) == events_.size()) {
+        if (muduo::implicit_cast<size_t>(numEvents) == events_.size()) {
             events_.resize(events_.size()*2);
         }
     } else if (numEvents == 0) {
@@ -68,7 +68,7 @@ Timestamp EPoller::poll(int timeoutMs, ChannelList* activeChannels)
 // 将events_中的活动fd填入activeChannels
 void EPoller::fillActiveChannels(int numEvents, ChannelList* activeChannels) const
 {
-    assert(implicit_cast<size_t>(numEvents) <= events_.size());
+    assert(muduo::implicit_cast<size_t>(numEvents) <= events_.size());
     for (int i = 0; i < numEvents; ++i)
     {
         // events_.data.ptr(*ptr)  设置为了

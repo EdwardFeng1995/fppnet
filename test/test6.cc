@@ -1,7 +1,7 @@
 #include "../src/net/EventLoop.h"
 #include <stdio.h>
 
-muduo::EventLoop* g_loop;
+fppnet::EventLoop* g_loop;
 int g_flag = 0;
 
 void run4()
@@ -35,7 +35,7 @@ int main()
 {
   printf("main(): pid = %d, flag = %d\n", getpid(), g_flag);
 
-  muduo::EventLoop loop;
+  fppnet::EventLoop loop;
   g_loop = &loop;
 
   loop.runAfter(2, run1);

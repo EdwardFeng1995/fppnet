@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_BUFFER_H
-#define MUDUO_NET_BUFFER_H
+#ifndef FPPNET_SRC_NET_BUFFER_H
+#define FPPNET_SRC_NET_BUFFER_H
 
 #include "../base/datetime/copyable.h"
 #include <algorithm>
@@ -19,7 +19,7 @@
 /// 0      <=      readerIndex   <=   writerIndex    <=     size
 /// @endcode
 
-namespace muduo
+namespace fppnet
 {
 
 class Buffer : public muduo::copyable

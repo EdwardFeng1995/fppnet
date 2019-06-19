@@ -1,9 +1,9 @@
-#ifndef MUDUO_NET_TIMERID_H
-#define MUDUO_NET_TIMERID_H
+#ifndef FPPNET_SRC_NET_TIMERID_H
+#define FPPNET_SRC_NET_TIMERID_H
 
 #include "../base/datetime/copyable.h"
 
-namespace muduo
+namespace fppnet
 {
 
 class Timer;
@@ -31,4 +31,4 @@ class TimerId : public muduo::copyable
 
 }
 
-#endif  // MUDUO_NET_TIMERID_H
+#endif

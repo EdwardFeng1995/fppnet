@@ -1,10 +1,10 @@
-#ifndef MUDUO_NET_SOCKETSOPS_H
-#define MUDUO_NET_SOCKETSOPS_H
+#ifndef FPPNET_SRC_NET_SOCKETSOPS_H
+#define FPPNET_SRC__NET_SOCKETSOPS_H
 
 #include <arpa/inet.h>
 #include <endian.h>
 
-namespace muduo
+namespace fppnet
 {
 namespace sockets
 {

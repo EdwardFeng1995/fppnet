@@ -8,7 +8,7 @@
 
 #include <errno.h>
 #include <stdio.h>
-using namespace muduo;
+using namespace fppnet;
 
 TcpConnection::TcpConnection(EventLoop* loop, const std::string& name, int sockfd,
                              const InetAddress& localAddr, const InetAddress& peerAddr) :
@@ -57,7 +57,7 @@ void TcpConnection::sendInLoop(const std::string& message)
     if (!channel_->isWriting() && outputBuffer_.readableBytes() == 0) {
         nwrote = ::write(channel_->Getfd(), message.data(), message.size());
         if(nwrote >= 0) {
-            if (implicit_cast<size_t>(nwrote) < message.size()) {
+            if (muduo::implicit_cast<size_t>(nwrote) < message.size()) {
                 LOG_TRACE << "I am going to write more data";
             } else if (writeCompleteCallback_) {    // 调用用户设置的低水位回调函数
                 loop_->queueInLoop(std::bind(writeCompleteCallback_, shared_from_this()));
@@ -72,7 +72,7 @@ void TcpConnection::sendInLoop(const std::string& message)
 
     assert(nwrote >= 0);
     // 如果没有一次性全部写完，就把剩余数据写入outputBuffer_，然后关注可写事件
-    if (implicit_cast<size_t>(nwrote) < message.size()) {
+    if (muduo::implicit_cast<size_t>(nwrote) < message.size()) {
         outputBuffer_.append(message.data()+nwrote, message.size()-nwrote);
         if(!channel_->isWriting()) {
             channel_->enableWriting();
@@ -119,7 +119,7 @@ void TcpConnection::connectEstablished()
     connectionCallback_(shared_from_this());  
 }
 
-void TcpConnection::handleRead(Timestamp receiveTime)
+void TcpConnection::handleRead(muduo::Timestamp receiveTime)
 {
     int savedErrno = 0;
     ssize_t n = inputBuffer_.readFd(channel_->Getfd(), &savedErrno);
@@ -182,7 +182,7 @@ void TcpConnection::handleError()
 {
     int err = sockets::getSocketError(channel_->Getfd());
     LOG_ERROR << "TcpConnection::hadnleError [" << name_
-              << "] - SO_ERROR = " << err << " " <<strerror_tl(err);
+              << "] - SO_ERROR = " << err << " " <<muduo::strerror_tl(err);
 }
 
 // TcpConnection析构前最后调用的一个成员函数，它通知用户连接已断开

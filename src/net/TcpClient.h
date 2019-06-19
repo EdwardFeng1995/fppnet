@@ -1,12 +1,12 @@
-#ifndef MUDUO_NET_TCPCLIENT_H
-#define MUDUO_NET_TCPCLIENT_H
+#ifndef FPPNET_SRC_NET_TCPCLIENT_H
+#define FPPNET_SRC_NET_TCPCLIENT_H
 
 #include <boost/noncopyable.hpp>
 #include <mutex>
 
 #include "TcpConnection.h"
 
-namespace muduo
+namespace fppnet
 {
 class Connector;
 using ConnectorPtr = std::shared_ptr<Connector>;

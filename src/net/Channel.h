@@ -1,11 +1,11 @@
-#ifndef MUDUO_NET_CHANNEL_H
-#define MUDUO_NET_CHANNEL_H
+#ifndef FPPNET_SRC_NET_CHANNEL_H
+#define FPPNET_SRC_NET_CHANNEL_H
 
 #include <boost/noncopyable.hpp>
 #include <functional>     //标准库的function
 #include "../base/datetime/Timestamp.h"
 
-namespace muduo
+namespace fppnet
 {
 
 class EventLoop;
@@ -26,13 +26,13 @@ public:
      */
     //typedef boost::function<void()> EventCallback;
     using EventCallback = std::function<void()>;       //使用using写法以及使用标准库的function
-    using ReadEventCallback = std::function<void(Timestamp)>;
+    using ReadEventCallback = std::function<void(muduo::Timestamp)>;
 
     // 构造函数
     Channel(EventLoop* loop, int fd);
 
     // 事件分发
-    void handleEvent(Timestamp receiveTime);
+    void handleEvent(muduo::Timestamp receiveTime);
 
     // 设置读、写、错误的回调函数
     void setReadCallback(const ReadEventCallback& cb) {

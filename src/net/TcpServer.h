@@ -1,12 +1,12 @@
-#ifndef MUDUO_NET_TCPSERVER_H
-#define MUDUO_NET_TCPSERVER_H
+#ifndef FPPNET_SRC_NET_TCPSERVER_H
+#define FPPNET_SRC_NET_TCPSERVER_H
 #include "Callbacks.h"
 #include "TcpConnection.h"
 
 #include <map>
 #include <boost/noncopyable.hpp>
 
-namespace muduo
+namespace fppnet
 {
 class Acceptor;
 class EventLoop;

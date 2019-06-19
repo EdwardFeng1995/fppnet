@@ -1,5 +1,5 @@
-#ifndef MUDUO_NET_POLLER_H
-#define MUDUO_NET_POLLER_H
+#ifndef FPPNET_SRC_NET_POLLER_H
+#define FPPNET_SRC_NET_POLLER_H
 
 #include <map>
 #include <vector>
@@ -9,7 +9,7 @@
 
 struct pollfd;
 
-namespace muduo
+namespace fppnet
 {
 
 class Channel;
@@ -27,7 +27,7 @@ public:
 
     //核心函数，调用poll(2)获得当前活动的I/O事件，
     //填入activeChannels，并返回poll(2) return的时刻
-    Timestamp poll(int timeoutMs, ChannelList* activeChannels);
+    muduo::Timestamp poll(int timeoutMs, ChannelList* activeChannels);
 
     //更新Channel关心的事件， 更新和维护pollfds_数组
     void updateChannel(Channel* channel);

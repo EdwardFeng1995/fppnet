@@ -5,7 +5,7 @@
 #include <sstream>
 #include <poll.h>
 
-using namespace muduo;
+using namespace fppnet;
 
 const int Channel::kNoneEvent  = 0;
 const int Channel::kReadEvent  = POLLIN | POLLPRI;
@@ -33,7 +33,7 @@ void Channel::update()
 
 //Channel核心，事件分发程序，由EventLoop::loop()调用
 //功能是根据revents_的值分别调用不同的用户回调
-void Channel::handleEvent(Timestamp receiveTime)
+void Channel::handleEvent(muduo::Timestamp receiveTime)
 {
     eventHandling_ = true;
     if (revents_ & POLLNVAL) {
